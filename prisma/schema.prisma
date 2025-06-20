@@ -6,3 +6,68 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL") 
 }
+
+enum Provider {
+  credentials
+  github
+  linkedin
+}
+
+enum Estado {
+  activo
+  inactivo
+  agotado
+}
+
+model User {
+  user_id     String   @id @default(uuid())
+  username    String
+  email       String   @unique
+  password    String?  
+  provider    Provider
+  avatar_url  String?
+  createdAt   DateTime @default(now())
+
+  rol_id      Int
+  role        Role     @relation(fields: [rol_id], references: [rol_id])
+
+  productos   Product[] 
+}
+
+model Role {
+  rol_id Int    @id @default(autoincrement())
+  rol    String
+
+  users  User[]
+}
+
+model Session {
+  sid     String   @id            
+  sess    Json
+  expire  DateTime
+}
+
+model Product {
+  producto_id    String   @id @default(uuid())
+  nombre         String
+  precio         Float
+  imagen         String?
+  descripcion    String
+  fechaCreacion  DateTime @default(now())
+  stock          Int
+  estado_id      Estado
+  is_active      Boolean  @default(true)
+
+  categoria_id   Int
+  vendedor_id    String
+
+  categoria      Categoria @relation(fields: [categoria_id], references: [categoria_id])
+  vendedor       User      @relation(fields: [vendedor_id], references: [user_id])
+}
+
+model Categoria {
+  categoria_id Int    @id @default(autoincrement())
+  categoria    String
+
+  productos    Product[]
+}
