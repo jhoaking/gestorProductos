@@ -19,7 +19,4 @@ export interface UserServiceType {
   rol: Rol;
 }
 
-export type OAuthUserInput = Pick<
-  UserServiceType,
-  "email" | "username" | "avatar_url" | "provider"
->;
+
