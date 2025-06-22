@@ -1,6 +1,7 @@
 import { prisma } from "@/config/client";
-import { Provider, UserServiceType } from "../types/typesUser";
+
 import { oauth2Types } from "../schema/oaauth2Schema";
+import { Provider, UserServiceType } from "@/types/typesUser";
 
 export class UserService {
   async createUser(input: oauth2Types): Promise<UserServiceType> {

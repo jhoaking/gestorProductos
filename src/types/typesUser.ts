@@ -1,4 +1,4 @@
-enum Provider {
+export enum Provider {
   github = "github",
   linkedin = "linkedin",
 }

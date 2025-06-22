@@ -4,7 +4,7 @@ import session from "express-session";
 import cors from "cors";
 
 import "./auth/strategy/passport";
-import "./auth/config/serialize";
+import "./auth/strategy/oauthInit";
 
 import { authRouter } from "./routes/auth.routes";
 import { routerDashboard } from "./routes/dashbard.routes";

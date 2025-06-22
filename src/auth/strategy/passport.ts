@@ -1,7 +1,7 @@
 import passport, { Profile } from "passport";
 import { UserService } from "../service/oauth2Service";
 import { validateOauth } from "../schema/oaauth2Schema";
-import { Provider } from "../types/typesUser";
+import { Provider } from "@/types/typesUser";
 
 const userClass = new UserService();
 
