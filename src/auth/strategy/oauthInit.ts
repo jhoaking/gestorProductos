@@ -13,8 +13,6 @@ import {
 import { Provider } from "@/types/typesUser";
 
 
-console.log("GITHUB_CLIENT_ID:", GITHUB_CLIENT_ID);
-
 setupOAuthStrategy({
   strategy: GithubStrategy,
   name: Provider.github,

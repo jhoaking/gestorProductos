@@ -6,7 +6,7 @@ export const authRouter = Router();
 authRouter.get("/github", passport.authenticate("github"));
 
 authRouter.get(
-  "/github/callback",
+  "/redirect",
   passport.authenticate("github", {
     successRedirect: "/dashboard",
     failureRedirect: "/github",
