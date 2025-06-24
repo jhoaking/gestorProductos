@@ -30,15 +30,20 @@ export class UserService {
   }
 
   async findUserById(email: string, provider: Provider) {
+    console.log("datos entrada" , email  ,provider);
+    
     const foundUser = await prisma.user.findFirst({
       where: {
         email,
         provider,
       },
     });
+
+    console.log("datos salida" , foundUser);
+    
     if (!foundUser) {
       throw new Error("no se encontro al user");
     }
     return foundUser;
   }
-}
+}   

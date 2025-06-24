@@ -53,11 +53,16 @@ export function setupOAuthStrategy({
 
           const userRaw = { email, username, avatar_url, provider };
 
-          const userExistente = await userClass.findUserById(email, provider);
-          if (userExistente) return done(null, userExistente);
-
           const validatedUser = validateOauth(userRaw);
           const nuevoUser = await userClass.createUser(validatedUser);
+
+          const userExistente = await userClass.findUserById(email, provider);
+          console.log("user" , userExistente);
+          
+
+          if (userExistente) return done(null, userExistente);
+
+        
 
           done(null, nuevoUser);
         } catch (error) {
