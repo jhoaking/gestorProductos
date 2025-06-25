@@ -1,6 +1,5 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { AuthType } from "@/types/typesUser";
 import { JWT_SECRET, SALT_ROUNDS } from "@/config";
 
 export class UtilClass {
@@ -9,8 +8,8 @@ export class UtilClass {
     return hash;
   };
 
-  static comparePassword = async (passowrd: string, passwordHashed: string) => {
-    const compare = await bcrypt.compare(passowrd, passwordHashed);
+  static comparePassword = async (password : string, passwordHashed: string) => {
+    const compare = await bcrypt.compare(password , passwordHashed);
     return compare;
   };
 
