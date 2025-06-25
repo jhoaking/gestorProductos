@@ -19,4 +19,4 @@ export interface UserServiceType {
   rol: Rol;
 }
 
-
+export type AuthType = Pick<UserServiceType, "user_id" | "username" | "email" | "password" | "rol">

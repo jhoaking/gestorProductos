@@ -11,11 +11,13 @@ passport.serializeUser((user: any, done) => {
 
 passport.deserializeUser(
   async (user: { email: string; provider: string }, done) => {
-    const users = await userClass.findUserById(user.email, user.provider as Provider);
+    const users = await userClass.findUserById(
+      user.email,
+      user.provider as Provider
+    );
     done(null, users);
   }
 );
-
 
 export function setupOAuthStrategy({
   strategy,
@@ -53,16 +55,13 @@ export function setupOAuthStrategy({
 
           const userRaw = { email, username, avatar_url, provider };
 
+          const userExistente = await userClass.controlUser(email);
+          if (userExistente) return done(null, userExistente);
+
           const validatedUser = validateOauth(userRaw);
           const nuevoUser = await userClass.createUser(validatedUser);
 
-          const userExistente = await userClass.findUserById(email, provider);
-          console.log("user" , userExistente);
-          
-
-          if (userExistente) return done(null, userExistente);
-
-        
+          console.log("user", userExistente);
 
           done(null, nuevoUser);
         } catch (error) {
