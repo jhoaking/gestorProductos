@@ -3,8 +3,8 @@ import passport from "passport";
 import session from "express-session";
 import cors from "cors";
 
-import "./auth/strategy/passport";
-import "./auth/strategy/oauthInit";
+import "./features/auth/strategy/passport";
+import "./features/auth/strategy/oauthInit";
 
 import { authRouter } from "./routes/auth.routes";
 import { routerDashboard } from "./routes/dashbard.routes";
