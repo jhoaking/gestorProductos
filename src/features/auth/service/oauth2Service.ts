@@ -35,7 +35,7 @@ export class UserService {
     const foundUser = await prisma.user.findFirst({
       where: {
         email,
-        provider,
+        provider 
       },
     });
 

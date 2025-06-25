@@ -8,7 +8,8 @@ import cookieParser from "cookie-parser";
 
 export async function start() {
   const app = express();
-  
+    app.use(express.json());
+
    const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -26,9 +27,9 @@ export async function start() {
     cookieParser(),
     express.json(),
     expressMiddleware(server, {
-      context: async ({ req:Request, res }) => {
+      context: async ({ req, res }) => {
         // 🔒 Aquí vas a poner la lógica de JWT o OAuth
-        return { user: null };
+        return { user: null  , res};
       },
     })
   );

@@ -1,7 +1,7 @@
 export enum Provider {
   github = "github",
   linkedin = "linkedin",
-  local  ="local"
+  credentials  ="credentials"
 }
 
 enum Rol {
