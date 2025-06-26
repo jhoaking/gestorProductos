@@ -2,6 +2,7 @@ import express from "express";
 import passport from "passport";
 import session from "express-session";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import "./features/auth/strategy/passport";
 import "./features/auth/strategy/oauthInit";
@@ -11,8 +12,11 @@ import { routerDashboard } from "./routes/dashbard.routes";
 
 export const app = express();
 
-app.use(cors({ origin: ["http://localhost:4000", "http://localhost:3000"], credentials: true }));
-app.use(express.json());
+// Middleware globales
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(express.json()); // <--- importante antes de Apollo
+app.use(cookieParser());
+
 app.use(
   session({
     secret: "some secret",
@@ -20,8 +24,10 @@ app.use(
     resave: false,
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Rutas normales
 app.use("/auth", authRouter);
 app.use("/dashboard", routerDashboard);
