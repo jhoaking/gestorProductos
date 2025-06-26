@@ -75,6 +75,7 @@ export const typeDefs = gql`
         getAllProductByCategories(categoria : Categoria):Product
         protectedUser : String
 
+        hello:String
 
     }
 

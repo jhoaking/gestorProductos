@@ -1,20 +1,20 @@
 import express from "express";
-import passport from "passport";
-import session from "express-session";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
-import "./features/auth/strategy/passport";
-import "./features/auth/strategy/oauthInit";
+import session from "express-session";
+import passport from "passport";
 
 import { authRouter } from "./routes/auth.routes";
 import { routerDashboard } from "./routes/dashbard.routes";
 
+import "./features/auth/strategy/passport";
+import "./features/auth/strategy/oauthInit";
+
 export const app = express();
 
-// Middleware globales
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(express.json()); // <--- importante antes de Apollo
+
+app.use(cors({ origin: ["http://localhost:3000","https://studio.apollographql.com"], credentials: true }));
+app.use(express.json());            
 app.use(cookieParser());
 
 app.use(
@@ -28,6 +28,5 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Rutas normales
 app.use("/auth", authRouter);
 app.use("/dashboard", routerDashboard);

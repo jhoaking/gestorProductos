@@ -18,7 +18,7 @@ export const resolvers = {
         throw new Error(error.message);
       }
     },
-
+ 
     login: async (_root: any, args: any, context: any) => {
       const { res } = context;
       const vali = validateLogin(args.input);
@@ -44,4 +44,9 @@ export const resolvers = {
       return "Sesión cerrada exitosamente.";
     },
   },
+  Query : {
+    hello : async () =>{
+      return " holaaa"
+    }
+  }
 };

@@ -2,10 +2,10 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { resolvers } from "./resolvers";
 import { typeDefs } from "./typeDefs";
+import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "@/config";
 import { AuthType } from "@/types/typesUser";
-import jwt from "jsonwebtoken";
-import { Express } from "express"; // para el tipo
+import { Express } from "express"; 
 
 export async function start(app: Express) {
   const server = new ApolloServer({
@@ -20,14 +20,14 @@ export async function start(app: Express) {
     expressMiddleware(server, {
       context: async ({ req, res }) => {
         const token = req.cookies?.access_token;
-        let user;
+        let user: AuthType | null = null;
+
         if (token) {
           try {
             user = jwt.verify(token, JWT_SECRET) as AuthType;
-          } catch {
-            user = null;
-          }
+          } catch {}
         }
+
         return { user, res };
       },
     })

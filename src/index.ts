@@ -8,3 +8,4 @@ start(app).then(() => {
     console.log(`🚀 GraphQL listo en http://localhost:${PORT}/graphql`);
   });
 });
+
