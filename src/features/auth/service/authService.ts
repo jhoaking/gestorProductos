@@ -35,6 +35,9 @@ export class AuthService {
         },
         provider: "credentials",
       },
+      include: {
+    role: true,  
+  },
     });
     return createUser;
   }

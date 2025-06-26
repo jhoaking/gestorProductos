@@ -18,7 +18,7 @@ export const resolvers = {
         throw new Error(error.message);
       }
     },
- 
+
     login: async (_root: any, args: any, context: any) => {
       const { res } = context;
       const vali = validateLogin(args.input);
@@ -29,8 +29,16 @@ export const resolvers = {
         sameSite: "lax",
         maxAge: 24 * 60 * 60 * 1000,
       };
-      res.cookie("access_token" , token ,options);
-      return {token}
+      res.cookie("access_token", token, options);
+      return {
+        token,
+        user: {
+          user_id: token.user?.user_id || "",
+          username: token.user?.username || "",
+          email: token.user?.email || "",
+          rol: token.user?.rol || null,
+        },
+      };
     },
     logout: async (_root: any, _args: any, context: any) => {
       const { res } = context;
@@ -44,9 +52,9 @@ export const resolvers = {
       return "Sesión cerrada exitosamente.";
     },
   },
-  Query : {
-    hello : async () =>{
-      return " holaaa"
-    }
-  }
+  Query: {
+    hello: async () => {
+      return " holaaa";
+    },
+  },
 };

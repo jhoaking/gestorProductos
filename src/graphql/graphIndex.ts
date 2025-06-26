@@ -1,7 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-import { resolvers } from "./resolvers";
 import { typeDefs } from "./typeDefs";
+import { resolvers } from "./resolvers";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "@/config";
 import { AuthType } from "@/types/typesUser";
