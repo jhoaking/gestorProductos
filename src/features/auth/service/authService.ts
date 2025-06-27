@@ -6,7 +6,10 @@ import { JwtPayload } from "jsonwebtoken";
 
 export class AuthService {
   async registerUser(data: registerUserType): Promise<UserServiceType> {
+    console.log("data" , data);
+    
     const existingUser = await prisma.user.findFirst({
+
       where: { email: data.email },
     });
 
@@ -15,6 +18,7 @@ export class AuthService {
     }
     const passowrd = await UtilClass.hashPassword(data.password);
 
+    
     const role = await prisma.role.findFirst({
       where: { rol: data.rol || "encargado" },
     });
@@ -38,13 +42,15 @@ export class AuthService {
       include: {
     role: true,  
   },
-    });
+    }); 
     return createUser;
   }
 
   async login(email: string, password: string) {
+    
     const user = await prisma.user.findFirst({
       where: { email: email, provider: "credentials" },
+        include: { role: true },
     });
     if (!user) {
       throw new Error("email no encontrado");
@@ -61,7 +67,7 @@ export class AuthService {
       user_id: user.user_id,
       username: user.username,
       email: user.email,
-      rol: user.rol,
+      rol: user.role.rol,
     };
     const token = UtilClass.createToken(payload);
     return {
@@ -70,7 +76,7 @@ export class AuthService {
         user_id: user.user_id,
         username: user.username,
         email: user.email,
-        rol: user.rol,
+        rol: user.role.rol,
       },
     };
   }

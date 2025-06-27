@@ -13,7 +13,13 @@ export const resolvers = {
       const vali = validateRegister(args.input);
       try {
         const user = await authService.registerUser(vali);
-        return user;
+        return {
+          user_id: user.user_id,
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          rol: user.rol ?? null,
+        };
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -22,22 +28,18 @@ export const resolvers = {
     login: async (_root: any, args: any, context: any) => {
       const { res } = context;
       const vali = validateLogin(args.input);
-      const token = await authService.login(vali.email, vali.password);
+      const result = await authService.login(vali.email, vali.password);
       const options: CookieOptions = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         maxAge: 24 * 60 * 60 * 1000,
       };
-      res.cookie("access_token", token, options);
+      res.cookie("access_token", result.token, options);
+
       return {
-        token,
-        user: {
-          user_id: token.user?.user_id || "",
-          username: token.user?.username || "",
-          email: token.user?.email || "",
-          rol: token.user?.rol || null,
-        },
+        token: result.token,
+        user: result.user,
       };
     },
     logout: async (_root: any, _args: any, context: any) => {
@@ -53,8 +55,12 @@ export const resolvers = {
     },
   },
   Query: {
-    hello: async () => {
-      return " holaaa";
+    protectedUser: (_root: any, _args: any, context: any) => {
+      console.log("usuario:", context.user);
+      if (!context.user) {
+        throw new Error("no autorizado");
+      }
+      return `Hola, ${context.user.username}`;
     },
   },
 };
